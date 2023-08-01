@@ -54,7 +54,7 @@
               <!-- rating -->
               <dt>Rating: <%= restaurant_hash.dig("weighted_rating_value").round(1) if restaurant_hash.has_key?("weighted_rating_value") %>/5.0 (<%= restaurant_hash.dig("aggregated_rating_count") if restaurant_hash.has_key?("aggregated_rating_count") %> ratings)</dt>
               <!-- dollar signs -->
-              <dt>Dollar signs: <%= "$" * restaurant_hash.dig("dollar_signs").round(0) if restaurant_hash.has_key?("dollar_signs") %></dt>
+              <dt>Budget: <%= "$" * restaurant_hash.dig("dollar_signs").round(0) if restaurant_hash.has_key?("dollar_signs") %></dt>
             </dl>      
           </div>
           <div class="restaurant-hours">
