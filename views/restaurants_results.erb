@@ -34,6 +34,10 @@
       <div class="card dark_blue">
         <p>The daily quota for Spoonacular API requests has been reached. Please try again tomorrow.</p>
       </div>
+    <% elsif @restaurant_list == [] %>
+      <div class="card dark_blue">
+        <p>No restaurant matching your criterias has been found.</p>
+      </div>
     <% else %>
       <% @restaurant_list.each do | restaurant_hash | %>
         <div class="card dark_blue">
