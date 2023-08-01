@@ -18,7 +18,6 @@ post("/process_restaurants") do
   @loc_weather = weather(user_lat, user_lng)
 
   current_search = JSON.generate(params)
-  pp current_search
   user_distance = params.fetch("distance")
   user_cuisine = params.fetch("cuisine")
   user_budget = params.fetch("budget")
