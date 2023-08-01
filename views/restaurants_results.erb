@@ -1,0 +1,69 @@
+<h1>What's for dinner</h1>
+
+<div class="grid-container results">
+
+  <div class="floating">
+    <div class="card light_blue">
+      <h2>Search inputs</h2>
+      <div class="info">
+        <p>Location: <%= params.fetch("location")%> </p>
+        <p>Distance max: <%= params.fetch("distance")%> miles </p>
+        <p>Cuisine: <%= params.fetch("cuisine")%> </p>
+        <p>Budget max: <%= params.fetch("budget")%> USD / meal </p>
+        <p>Minimum rating: <%= params.fetch("min_rating")%>/5 </p>
+      </div>
+    </div>
+    <div class="card light_blue">
+      <h2>Weather at location</h2>
+      <div class="info">
+        <p> Temperature: <%= @loc_weather.fetch(:temp_F) %>°F (<%= @loc_weather.fetch(:temp_C) %>°C) </p>
+        <p> Currently: <%= @loc_weather.fetch(:summary) %> </p>
+        <p> <%= @loc_weather.fetch(:umbrella) %> </p>
+      </div>
+    </div>
+  </div>
+
+  <div></div>
+
+  <div class="right">
+    <% if @restaurant_list == nil %>
+      <div class="card dark_blue">
+        <p>The daily quota for Spoonacular API requests has been reached. Please try again tomorrow.</p>
+      </div>
+    <% else %>
+      <% @restaurant_list.each do | restaurant_hash | %>
+        <div class="card dark_blue">
+        <h2><%= restaurant_hash.fetch("name") %> (<%= restaurant_hash.fetch("miles").round(1) %> miles away)</h2>
+          <div class="restaurant-card">
+            <div class="restaurant-info">
+              <dl>
+                <!-- address -->
+                <dt><%= restaurant_hash.dig("address", "street_addr") %>, <%= restaurant_hash.dig("address", "city") %>, <%= restaurant_hash.dig("address", "state") %> <%= restaurant_hash.dig("address", "zipcode") %> </dt>
+                <!-- phone -->
+                <dt>Phone: <%= restaurant_hash.dig("phone_number").to_s.insert(0, "+").insert(2, " (").insert(7, ") ").insert(-5, "-") %></dt>
+                <!-- rating -->
+                <dt>Rating: <%= restaurant_hash.dig("weighted_rating_value").round(1) if restaurant_hash.has_key?("weighted_rating_value") %>/5.0 (<%= restaurant_hash.dig("aggregated_rating_count") if restaurant_hash.has_key?("aggregated_rating_count") %> ratings)</dt>
+                <!-- dollar signs -->
+                <dt>Dollar signs: <%= "$" * restaurant_hash.dig("dollar_signs").round(0) if restaurant_hash.has_key?("dollar_signs") %></dt>
+              </dl>      
+            </div>
+            <div class="restaurant-hours">
+              <dl>
+                <!-- hours of operation -->
+                <% restaurant_hash.dig("local_hours", "operational").each do |day, hours| %>
+                  <dd> <%= day %>: <%= hours %> </dd>
+                <% end %>
+              </dl>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <form action="/">
+      <button>Go back.</button>
+    </form>
+  </div>
+
+ 
+
+</div>

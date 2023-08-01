@@ -1,0 +1,59 @@
+<h1>What's for dinner?</h1>
+
+<div class="grid-container form">
+
+  <div class="card dark_blue">
+    <form action="/process_restaurants" method="post">
+      <label for="location">Location (available only in North America):
+      <input type="text" id="location" name="location" value="Logan Square, Chicago, IL" required>
+      </label>
+      <label for="distance">Distance max (miles):
+      <input type="range" min=1 max=10 id="distance" name="distance" value="5" list="distance_list">
+        <datalist id="distance_list">
+        <option value="1" label="1"></option>
+        <option value="2" label="2"></option>
+        <option value="3" label="3"></option>
+        <option value="4" label="4"></option>
+        <option value="5" label="5"></option>
+        <option value="6" label="6"></option>
+        <option value="7" label="7"></option>
+        <option value="8" label="8"></option>
+        <option value="9" label="9"></option>
+        <option value="10" label="10"></option>
+      </datalist>
+      </label>
+      <label for="cuisine">Cuisine:
+      <input type="text" id="cuisine" name="cuisine" value="French" required>
+      </label>
+      <label for="budget">Budget max (USD, per meal):
+      <input type="number" id="budget" name="budget" value="50" required>
+      </label>
+      <label for="min_rating">Minimum rating (over 5):
+      <input type="range" min=0 max=5 step=0.5 id="min_rating" name="min_rating" value="3" list="rating_list">
+        <datalist id="rating_list">
+        <option value="0" label="0"></option>
+        <option value="1" label="1"></option>
+        <option value="2" label="2"></option>
+        <option value="3" label="3"></option>
+        <option value="4" label="4"></option>
+        <option value="5" label="5"></option>
+      </datalist>
+      </label>
+      <button>Search restaurants</button>
+    </form>
+  </div>
+
+  <div class="card light_blue">
+    <h2>Previous searches: [Feature to come]</h2>
+    <ul>
+      <% if cookies.fetch("counter").to_i != 0 %>
+        <% for i in 0..cookies.fetch("counter").to_i do %>
+          <li><%= cookies.fetch("search_#{i}") %></li>
+        <% end %>
+      <% end %>
+    </ul>
+    <form action="/clear_cookies" method="post">
+      <button>Clear history</button>
+    </form>
+  </div>
+</div>
