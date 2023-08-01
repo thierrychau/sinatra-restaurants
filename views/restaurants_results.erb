@@ -16,9 +16,13 @@
     <div class="card light_blue">
       <h2>Weather at location</h2>
       <div class="info">
-        <p> Temperature: <%= @loc_weather.fetch(:temp_F) %>°F (<%= @loc_weather.fetch(:temp_C) %>°C) </p>
-        <p> Currently: <%= @loc_weather.fetch(:summary) %> </p>
-        <p> <%= @loc_weather.fetch(:umbrella) %> </p>
+        <% if @loc_weather != nil %>
+          <p> Temperature: <%= @loc_weather.fetch(:temp_F) if @loc_weather.has_key?(:temp_F) %>°F (<%= @loc_weather.fetch(:temp_C) if @loc_weather.has_key?(:temp_C) %>°C) </p>
+          <p> Currently: <%= @loc_weather.fetch(:summary) if @loc_weather.has_key?(:summary) %> </p>
+          <p> <%= @loc_weather.fetch(:umbrella) if @loc_weather.has_key?(:umbrella) %> </p>
+        <% else %>
+          <p>Weather info currently not available.</p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -38,7 +42,7 @@
             <div class="restaurant-info">
               <dl>
                 <!-- address -->
-                <dt><%= restaurant_hash.dig("address", "street_addr") %>, <%= restaurant_hash.dig("address", "city") %>, <%= restaurant_hash.dig("address", "state") %> <%= restaurant_hash.dig("address", "zipcode") %> </dt>
+                <dt><%= [restaurant_hash.dig("address", "street_addr"), restaurant_hash.dig("address", "city"), restaurant_hash.dig("address", "state"), restaurant_hash.dig("address", "zipcode")].compact.join(', ') %></dt>
                 <!-- phone -->
                 <dt>Phone: <%= restaurant_hash.dig("phone_number").to_s.insert(0, "+").insert(2, " (").insert(7, ") ").insert(-5, "-") %></dt>
                 <!-- rating -->

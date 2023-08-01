@@ -44,7 +44,7 @@
   </div>
 
   <div class="card light_blue">
-    <h2>Previous searches: [Feature to come]</h2>
+    <h2>Previous searches: <% cookies.fetch("counter").to_i if cookies.has_key?("counter") %> [Feature to come]</h2>
     <ul>
       <% if cookies.fetch("counter").to_i != 0 %>
         <% for i in 0..cookies.fetch("counter").to_i do %>
