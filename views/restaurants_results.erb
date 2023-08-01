@@ -46,24 +46,20 @@
         <h2><%= restaurant_hash.fetch("name") %> (<%= restaurant_hash.fetch("miles").round(1) %> miles away)</h2>
         <div class="restaurant-card">
           <div class="restaurant-info">
-            <dl>
-              <!-- address -->
-              <dt><%= [restaurant_hash.dig("address", "street_addr"), restaurant_hash.dig("address", "city"), restaurant_hash.dig("address", "state"), restaurant_hash.dig("address", "zipcode")].compact.join(', ') %></dt>
-              <!-- phone -->
-              <dt>Phone: <%= restaurant_hash.dig("phone_number").to_s.insert(0, "+").insert(2, " (").insert(7, ") ").insert(-5, "-") %></dt>
-              <!-- rating -->
-              <dt>Rating: <%= restaurant_hash.dig("weighted_rating_value").round(1) if restaurant_hash.has_key?("weighted_rating_value") %>/5.0 (<%= restaurant_hash.dig("aggregated_rating_count") if restaurant_hash.has_key?("aggregated_rating_count") %> ratings)</dt>
-              <!-- dollar signs -->
-              <dt>Budget: <%= "$" * restaurant_hash.dig("dollar_signs").round(0) if restaurant_hash.has_key?("dollar_signs") %></dt>
-            </dl>      
+            <!-- address -->
+            <p><%= [restaurant_hash.dig("address", "street_addr"), restaurant_hash.dig("address", "city"), restaurant_hash.dig("address", "state"), restaurant_hash.dig("address", "zipcode")].compact.join(', ') %></p>
+            <!-- phone -->
+            <p>Phone: <%= restaurant_hash.dig("phone_number").to_s.insert(0, "+").insert(2, " (").insert(7, ") ").insert(-5, "-") %></p>
+            <!-- rating -->
+            <p>Rating: <%= restaurant_hash.dig("weighted_rating_value").round(1) if restaurant_hash.has_key?("weighted_rating_value") %>/5.0 (<%= restaurant_hash.dig("aggregated_rating_count") if restaurant_hash.has_key?("aggregated_rating_count") %> ratings)</p>
+            <!-- dollar signs -->
+            <p>Budget: <%= "$" * restaurant_hash.dig("dollar_signs").round(0) if restaurant_hash.has_key?("dollar_signs") %></p>  
           </div>
           <div class="restaurant-hours">
-            <dl>
-              <!-- hours of operation -->
-              <% restaurant_hash.dig("local_hours", "operational").each do |day, hours| %>
-                <dd> <%= day %>: <%= hours %> </dd>
-              <% end %>
-            </dl>
+            <!-- hours of operation -->
+            <% restaurant_hash.dig("local_hours", "operational").each do |day, hours| %>
+              <p> <%= day %>: <%= hours %> </p>
+            <% end %>
           </div>
         </div>
       </div>
