@@ -18,17 +18,18 @@ post("/process_restaurants") do
   @loc_weather = weather(user_lat, user_lng)
 
   current_search = JSON.generate(params)
-
+  pp current_search
   user_distance = params.fetch("distance")
   user_cuisine = params.fetch("cuisine")
   user_budget = params.fetch("budget")
   user_rating = params.fetch("min_rating")
 
-  current_search_results = spoonacular_restaurants(user_lat, user_lng, user_distance, user_cuisine, user_budget, user_rating)
-  parsed_spoonacular_response = JSON.parse(current_search_results)
-
-  # saved spoonacular response for testing (comment lines 27 and 28)
-  # parsed_spoonacular_response = default_spoonacular_response
+  if current_search == "{\"location\":\"Logan Square, Chicago, IL\",\"distance\":\"5\",\"cuisine\":\"French\",\"budget\":\"50\",\"min_rating\":\"3\"}"
+    parsed_spoonacular_response = default_spoonacular_response
+  else
+    current_search_results = spoonacular_restaurants(user_lat, user_lng, user_distance, user_cuisine, user_budget, user_rating)
+    parsed_spoonacular_response = JSON.parse(current_search_results)
+  end
 
   if parsed_spoonacular_response.has_key?("restaurants")
     @restaurant_list = parsed_spoonacular_response.dig("restaurants")
