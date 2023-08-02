@@ -2,7 +2,7 @@ require "sinatra"
 require "sinatra/reloader"
 require "http"
 require "sinatra/cookies"
-test
+
 get("/") do
   if cookies.has_key?("counter") == false
     cookies.store("counter", 0)
